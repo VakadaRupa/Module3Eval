@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 const Navbar = ({ setSearch, setFilterType, setFilterParking }) => {
   const searchRef = useRef();
@@ -18,13 +18,13 @@ const Navbar = ({ setSearch, setFilterType, setFilterParking }) => {
       />
       <select onChange={(e) => setFilterType(e.target.value)}>
         <option value="">All Types</option>
-        <option value="Rajasthani">Rajasthani</option>
-        <option value="Gujarati">Gujarati</option>
-        <option value="Mughlai">Mughlai</option>
-        <option value="Jain">Jain</option>
-        <option value="Thai">Thai</option>
-        <option value="North Indian">North Indian</option>
-        <option value="South Indian">South Indian</option>
+        <option>Rajasthani</option>
+        <option>Gujarati</option>
+        <option>Mughlai</option>
+        <option>Jain</option>
+        <option>Thai</option>
+        <option>North Indian</option>
+        <option>South Indian</option>
       </select>
       <select onChange={(e) => setFilterParking(e.target.value)}>
         <option value="">Parking?</option>

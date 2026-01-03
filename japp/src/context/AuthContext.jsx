@@ -1,12 +1,10 @@
 // src/context/AuthContext.jsx
-import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
@@ -14,33 +12,21 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (email, password) => {
-    const credentials = [
-      { role: "admin", email: "admin@gmail.com", password: "admin1234" },
-      { role: "customer", email: "customer@gmail.com", password: "customer1234" },
-    ];
+    let role = null;
+    if (email === "admin@gmail.com" && password === "admin1234") role = "admin";
+    else if (email === "customer@gmail.com" && password === "customer1234")
+      role = "customer";
+    else return false;
 
-    const found = credentials.find(
-      (c) => c.email === email && c.password === password
-    );
-
-    if (!found) {
-      alert("Invalid email or password");
-      return false;
-    }
-
-    setUser(found);
-    localStorage.setItem("loggedUser", JSON.stringify(found));
-
-    if (found.role === "admin") navigate("/admin/dashboard");
-    else navigate("/customers/dashboard");
-
+    const userData = { email, role };
+    setUser(userData);
+    localStorage.setItem("loggedUser", JSON.stringify(userData));
     return true;
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem("loggedUser");
-    navigate("/login");
   };
 
   return (
@@ -49,3 +35,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

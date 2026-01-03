@@ -31,15 +31,16 @@ const AdminDashboard = () => {
   };
 
   const filteredData = restaurants.filter((r) => {
-    const matchSearch = r.restaurantName.toLowerCase().includes(search.toLowerCase()) ||
-                        r.address.toLowerCase().includes(search.toLowerCase());
+    const matchSearch =
+      r.restaurantName.toLowerCase().includes(search.toLowerCase()) ||
+      r.address.toLowerCase().includes(search.toLowerCase());
     const matchType = filterType ? r.type === filterType : true;
     const matchParking = filterParking ? r.parkingLot.toString() === filterParking : true;
     return matchSearch && matchType && matchParking;
   });
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h2>Admin Dashboard</h2>
       <RestaurantForm handleAdd={handleAdd} />
       <Navbar setSearch={setSearch} setFilterType={setFilterType} setFilterParking={setFilterParking} />
