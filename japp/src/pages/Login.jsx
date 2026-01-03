@@ -1,32 +1,39 @@
-import { useContext, useState } from "react";
+// src/pages/Login.jsx
+import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    const role = login(email, password);
-    if (!role) return alert("Invalid credentials");
-
-    role === "admin"
-      ? navigate("/admin/dashboard")
-      : navigate("/customers/dashboard");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(email, password);
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h2>Login</h2>
-      <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        /><br/><br/>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        /><br/><br/>
+        <button type="submit">Login</button>
+      </form>
     </div>
   );
-}
+};
+
+export default Login;
